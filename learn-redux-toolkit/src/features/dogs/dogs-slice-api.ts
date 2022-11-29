@@ -10,21 +10,43 @@ interface Breed {
     }
 }
 
+
 const apiSlice = createApi({
     reducerPath: 'api',
     baseQuery: fetchBaseQuery({
         baseUrl: 'https://api.thedogapi.com/v1',
-        prepareHeaders(headers) {
-            headers.set('x-api-key', DOGS_API_KEY);
+        prepareHeaders(headers){
+            headers.set('x-api-key', DOGS_API_KEY)
 
-            return Headers;
+            return headers;
         }
     }),
-    endpoints(builder) {
+    endpoints(builder){
         return {
-            'fetchBreeds': builder.query<Breed[], number|void>({
-                
+            fetchBreeds: builder.query<Breed[], number|void>({
+                query(_limit = 10){
+                    return `/breeds?limit=${_limit}`
+                }
             })
-        }      
-    },
+        }
+    }
 })
+
+// const apiSlice = createApi({
+//     reducerPath: 'api',
+//     baseQuery: fetchBaseQuery({
+//         baseUrl: 'https://api.thedogapi.com/v1',
+//         prepareHeaders(headers) {
+//             headers.set('x-api-key', DOGS_API_KEY);
+
+//             return Headers;
+//         }
+//     }),
+//     endpoints(builder) {
+//         return {
+//             'fetchBreeds': builder.query<Breed[], number|void>({
+                
+//             })
+//         }      
+//     },
+// })
